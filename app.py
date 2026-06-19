@@ -31,7 +31,7 @@ CUSTOM_CSS = """
 [data-testid="stMetricValue"] {font-size: 1.6rem;}
 .kicker {font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em;}
 .hero {padding: 0.50rem 1.1rem; border: 1px solid #e2e8f0; border-radius: 18px; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);} 
-.small-card {padding: 0.45rem 1rem; border: 1px solid #e2e8f0; border-radius: 16px; background: white;}
+.small-card {padding: 0.1rem 1rem; border: 1px solid #e2e8f0; border-radius: 16px; background: white;}
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
