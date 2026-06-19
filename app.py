@@ -25,17 +25,6 @@ from tax_engine import (
 
 st.set_page_config(page_title="OneSupply Impo", page_icon="🚢", layout="wide")
 
-CUSTOM_CSS = """
-<style>
-.block-container {padding-top: 3.0rem; padding-bottom: 0.5rem;}
-[data-testid="stMetricValue"] {font-size: 1.6rem;}
-.kicker {font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em;}
-.hero {padding: 0rem 1.1rem; border: 1px solid #e2e8f0; border-radius: 18px; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);} 
-.small-card {padding: 0.85rem 1rem; border: 1px solid #e2e8f0; border-radius: 16px; background: white;}
-</style>
-"""
-st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
-
 st.markdown("""
 <style>
     section[data-testid="stSidebar"] .block-container {
@@ -50,6 +39,17 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+CUSTOM_CSS = """
+<style>
+.block-container {padding-top: 3.0rem; padding-bottom: 0.5rem;}
+[data-testid="stMetricValue"] {font-size: 1.6rem;}
+.kicker {font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em;}
+.hero {padding: 0rem 1.1rem; border: 1px solid #e2e8f0; border-radius: 18px; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);} 
+.small-card {padding: 0.85rem 1rem; border: 1px solid #e2e8f0; border-radius: 16px; background: white;}
+</style>
+"""
+st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 def brl(v: float) -> str:
     return f"R$ {v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
