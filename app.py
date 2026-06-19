@@ -163,7 +163,7 @@ with st.sidebar:
     st.caption("As tabelas de ICMS por UF e custos-padrão por porto podem ser editadas na aba Parâmetros.")
     st.divider()
     st.subheader("O que mudou na v2")
-    st.markdown("""
+    st.caption("""
         - País de origem incluído.
         - Tabela de ICMS por UF editável no app.
         - Premissas de custos por porto editáveis no app.
