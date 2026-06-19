@@ -35,7 +35,7 @@ section[data-testid="stSidebar"] .block-container {
 
 /* remove espaço acima do primeiro elemento */
 section[data-testid="stSidebar"] [data-testid="stImage"] {
-    margin-top: -30px !important;
+    margin-top: -40px !important;
     margin-bottom: 8px !important;
     display: flex;
     justify-content: center;
@@ -179,7 +179,6 @@ with st.sidebar:
     st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
     st.image("oslogo.png", width=170)
     st.markdown('</div>', unsafe_allow_html=True)
-    st.divider()
     pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
     cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01, key="sb_cofins_rate")
     use_uf_icms = st.toggle("Usar tabela ICMS por UF", value=True, key="sb_use_uf_icms")
