@@ -145,6 +145,7 @@ def calculate_import_costs(inputs: ImportInputs, ii_rate: float, ipi_rate: float
         "Seguro frete nacional (BRL)": inland_insurance_brl,
         "ICMS (BRL)": icms_value,
         "Total landed cost (BRL)": total_landed,
+        "Custo unitário (BRL)": unit_landed_brl,
     }
 
     waterfall_rows = [
