@@ -25,7 +25,7 @@ from tax_engine import (
 
 st.write("")
 st.write("")
-st.set_page_config(page_title="Assistente de Importação Pro", page_icon="🚢", layout="wide")
+st.set_page_config(page_title="OneSupply Impo", page_icon="🚢", layout="wide")
 
 CUSTOM_CSS = """
 <style>
@@ -143,7 +143,7 @@ with st.sidebar:
     st.divider()
     st.caption("As tabelas de ICMS por UF e custos-padrão por porto podem ser editadas na aba Parâmetros.")
 
-st.markdown("<div class='hero'><div class='kicker'>Assistente profissional</div><h2 style='margin:0'>Landed cost de importação com painel executivo, PDF e tabelas editáveis</h2><p style='margin-bottom:0;color:#334155'>Pensado para operação real: entrada estruturada, consulta oficial de II/IPI, custo por unidade, memória de cálculo e base pronta para evoluir.</p></div>", unsafe_allow_html=True)
+st.markdown("<div class='hero'><h2 style='margin:0'>Simulação de Importação - Landed Cost</h2></div>", unsafe_allow_html=True)
 
 main_tab, dashboard_tab, params_tab, docs_tab = st.tabs(["Operação", "Dashboard Executivo", "Parâmetros", "Documentação"])
 
