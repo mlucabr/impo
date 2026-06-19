@@ -27,16 +27,25 @@ st.set_page_config(page_title="OneSupply Impo", page_icon="🚢", layout="wide")
 
 st.markdown("""
 <style>
-    section[data-testid="stSidebar"] .block-container {
-        padding-top: 0rem;
-    }
+/* sobe o conteúdo geral da sidebar */
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 0rem !important;
+    padding-bottom: 1rem;
+}
 
-    .sidebar-logo {
-        display: flex;
-        justify-content: center;
-        margin-top: -10px;
-        margin-bottom: 10px;
-    }
+/* remove espaço acima do primeiro elemento */
+section[data-testid="stSidebar"] [data-testid="stImage"] {
+    margin-top: -18px !important;
+    margin-bottom: 8px !important;
+    display: flex;
+    justify-content: center;
+}
+
+/* centraliza a imagem */
+section[data-testid="stSidebar"] [data-testid="stImage"] img {
+    margin: 0 auto;
+    display: block;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -167,7 +176,7 @@ def render_breakdown_chart(df: pd.DataFrame) -> alt.Chart:
 init_state()
 
 with st.sidebar:
-    st.markdown('<div class="sidebar-logo">', unsafe_allow_html=True)
+    st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
     st.image("oslogo.png", width=170)
     st.markdown('</div>', unsafe_allow_html=True)
     st.divider()
