@@ -36,6 +36,21 @@ CUSTOM_CSS = """
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+    section[data-testid="stSidebar"] .block-container {
+        padding-top: 0.8rem;
+    }
+
+    .sidebar-logo {
+        display: flex;
+        justify-content: center;
+        margin-top: -10px;
+        margin-bottom: 10px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 def brl(v: float) -> str:
     return f"R$ {v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
@@ -152,7 +167,9 @@ def render_breakdown_chart(df: pd.DataFrame) -> alt.Chart:
 init_state()
 
 with st.sidebar:
-    st.image("oslogo.png", width=180)
+    st.markdown('<div class="sidebar-logo">', unsafe_allow_html=True)
+    st.image("assets/oslogo.png", width=170)
+    st.markdown('</div>', unsafe_allow_html=True)
     st.divider()
     pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
     cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01, key="sb_cofins_rate")
