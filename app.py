@@ -331,9 +331,9 @@ with main_tab:
 
         subt1, subt2 = st.columns(2)
         with subt1:
-            st.dataframe(taxes_df, use_container_width=True, hide_index=True)
+            st.dataframe(style_brl_table(taxes_df), use_container_width=True, hide_index=True)
         with subt2:
-            st.dataframe(memory_df, use_container_width=True, hide_index=True)
+            st.dataframe(style_brl_table(memory_df), use_container_width=True, hide_index=True)
 
         inputs_dict = inputs.__dict__.copy()
         xlsx_bytes = make_excel_export(result, official, inputs_dict, taxes_df, memory_df, breakdown_df)
@@ -378,7 +378,7 @@ with dashboard_tab:
             st.altair_chart(render_waterfall_chart(result), use_container_width=True)
             st.caption("Fonte dos dados: memória de cálculo gerada pelo motor tributário/logístico da aplicação.")
 
-        st.dataframe(breakdown_df, use_container_width=True, hide_index=True)
+        st.dataframe(style_brl_table(breakdown_df), use_container_width=True, hide_index=True)
 
 with params_tab:
     st.subheader("Parâmetros editáveis")
