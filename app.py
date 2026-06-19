@@ -23,8 +23,6 @@ from tax_engine import (
     tax_dataframe,
 )
 
-st.write("")
-st.write("")
 st.set_page_config(page_title="OneSupply Impo", page_icon="🚢", layout="wide")
 
 CUSTOM_CSS = """
