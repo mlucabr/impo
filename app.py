@@ -50,6 +50,28 @@ def pct(v: float) -> str:
 def num4(v: float) -> str:
     return f"{v:,.4f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
+def fmt_br_number(v: float, decimals: int = 2) -> str:
+    try:
+        return f"{float(v):,.{decimals}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    except Exception:
+        return str(v)
+
+
+def style_brl_table(df: pd.DataFrame) -> pd.io.formats.style.Styler:
+    formatters = {}
+
+    for col in df.columns:
+        col_up = str(col).upper()
+
+        # colunas monetárias / de custo / valor
+        if "VALOR" in col_up or "CUSTO" in col_up:
+            formatters[col] = lambda x: fmt_br_number(x, 2)
+
+        # colunas de alíquota
+        elif "ALÍQUOTA" in col_up or "ALIQ" in col_up or col_up.endswith("(%)"):
+            formatters[col] = lambda x: fmt_br_number(x, 2)
+
+    return df.style.format(formatters)
 
 def init_state() -> None:
     if "icms_df" not in st.session_state:
@@ -143,7 +165,7 @@ with st.sidebar:
     st.divider()
     st.caption("As tabelas de ICMS por UF e custos-padrão por porto podem ser editadas na aba Parâmetros.")
 
-st.markdown("<div class='hero'><h2 style='margin:0'>Simulação de Importação - Landed Cost</h2></div>", unsafe_allow_html=True)
+st.markdown("<div class='hero'><h3 style='margin:0'>Simulação de Importação - Landed Cost</h3></div>", unsafe_allow_html=True)
 
 main_tab, dashboard_tab, params_tab, docs_tab = st.tabs(["Operação", "Dashboard Executivo", "Parâmetros", "Documentação"])
 
