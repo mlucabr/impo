@@ -133,8 +133,8 @@ def render_breakdown_chart(df: pd.DataFrame) -> alt.Chart:
 init_state()
 
 with st.sidebar:
-    st.markdown("### Assistente de Importação Pro")
-    st.caption("Versão 2 • Arquitetura modular • Streamlit")
+    st.markdown("### Assistente de Importação")
+    st.caption("Versão 2.0")
     st.divider()
     pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
     cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01, key="sb_cofins_rate")
@@ -199,7 +199,7 @@ with main_tab:
                 key="frm_inland_freight"
             )
             inland_insurance_pct = e4.number_input(
-                "Seguro frete nacional ad valorem (%)", min_value=0.0, max_value=100.0,
+                "Ad valorem (%)", min_value=0.0, max_value=100.0,
                 value=float(port_defaults["SEGURO_NACIONAL_ADVAL_PCT"] if apply_port_templates else 0.15), step=0.01,
                 key="frm_inland_insurance_pct"
             )
@@ -219,7 +219,7 @@ with main_tab:
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("<div class='small-card' style='margin-top:12px'>", unsafe_allow_html=True)
-        st.subheader("O que mudou na V2")
+        st.subheader("O que mudou na v2")
         st.markdown("""
         - País de origem incluído.
         - Tabela de ICMS por UF editável no app.
