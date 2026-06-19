@@ -39,7 +39,7 @@ st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 st.markdown("""
 <style>
     section[data-testid="stSidebar"] .block-container {
-        padding-top: 0.8rem;
+        padding-top: 0.2rem;
     }
 
     .sidebar-logo {
