@@ -28,7 +28,7 @@ st.set_page_config(page_title="OneSupply Impo", page_icon="🚢", layout="wide")
 st.markdown("""
 <style>
     section[data-testid="stSidebar"] .block-container {
-        padding-top: 0.2rem;
+        padding-top: 0rem;
     }
 
     .sidebar-logo {
