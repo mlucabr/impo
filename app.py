@@ -85,10 +85,15 @@ def make_excel_export(result, official, inputs_dict, taxes_df, memory_df, breakd
         workbook = writer.book
         money_fmt = workbook.add_format({"num_format": 'R$ #,##0.00'})
 
-        for ws_name in ["Tributos", "Memória", "Dashboard"]:
+        for ws_name in ["Memória", "Dashboard"]:
             ws = writer.sheets[ws_name]
             ws.set_column(0, 0, 28)
-            ws.set_column(1, 2, 18, money_fmt if ws_name != "Tributos" else None)
+            ws.set_column(1, 2, 18, money_fmt)
+
+        ws_t = writer.sheets["Tributos"]
+        ws_t.set_column(0, 0, 18)
+        ws_t.set_column(1, 1, 14)
+        ws_t.set_column(2, 2, 18, money_fmt)
 
         writer.sheets["Resumo"].set_column("A:A", 28)
         writer.sheets["Resumo"].set_column("B:B", 42)
@@ -105,14 +110,13 @@ def render_waterfall_chart(result) -> alt.Chart:
     df["Acumulado"] = df["Valor"].cumsum()
     df["Base"] = df["Acumulado"] - df["Valor"]
 
-    chart = alt.Chart(df).mark_bar(cornerRadiusTopLeft=4, cornerRadiusTopRight=4).encode(
+    return alt.Chart(df).mark_bar(cornerRadiusTopLeft=4, cornerRadiusTopRight=4).encode(
         x=alt.X("Etapa:N", sort=None, title="Etapa"),
         y=alt.Y("Base:Q", title="Valor (BRL)", axis=alt.Axis(format=",.0f")),
         y2="Acumulado:Q",
         color=alt.Color("Grupo:N", legend=alt.Legend(title="Grupo")),
         tooltip=["Etapa", alt.Tooltip("Valor:Q", format=",.2f"), "Grupo"]
     ).properties(height=360)
-    return chart
 
 
 def render_breakdown_chart(df: pd.DataFrame) -> alt.Chart:
@@ -130,10 +134,10 @@ with st.sidebar:
     st.markdown("### Assistente de Importação Pro")
     st.caption("Versão 2 • Arquitetura modular • Streamlit")
     st.divider()
-    pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01)
-    cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01)
-    use_uf_icms = st.toggle("Usar tabela ICMS por UF", value=True)
-    include_afrmm = st.toggle("Aplicar AFRMM (25% longo curso)", value=True)
+    pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
+    cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01, key="sb_cofins_rate")
+    use_uf_icms = st.toggle("Usar tabela ICMS por UF", value=True, key="sb_use_uf_icms")
+    include_afrmm = st.toggle("Aplicar AFRMM (25% longo curso)", value=True, key="sb_include_afrmm")
     st.divider()
     st.caption("As tabelas de ICMS por UF e custos-padrão por porto podem ser editadas na aba Parâmetros.")
 
@@ -148,30 +152,30 @@ with main_tab:
         with st.form("import_form_v2"):
             st.subheader("1) Dados da mercadoria")
             a1, a2, a3, a4, a5 = st.columns(5)
-            quantity = a1.number_input("Quantidade", min_value=0.0001, value=1.0, step=1.0)
-            unit = a2.text_input("Unidade", value="KG")
-            unit_price = a3.number_input("Valor unitário", min_value=0.0, value=0.0, step=0.01)
-            product_currency = a4.text_input("Moeda da mercadoria", value="USD").upper()
-            product_fx = a5.number_input(f"Câmbio {product_currency} → BRL", min_value=0.000001, value=5.40, step=0.0001, format="%.4f")
+            quantity = a1.number_input("Quantidade", min_value=0.0001, value=1.0, step=1.0, key="frm_quantity")
+            unit = a2.text_input("Unidade", value="KG", key="frm_unit")
+            unit_price = a3.number_input("Valor unitário", min_value=0.0, value=0.0, step=0.01, key="frm_unit_price")
+            product_currency = a4.text_input("Moeda da mercadoria", value="USD", key="frm_product_currency").upper()
+            product_fx = a5.number_input(f"Câmbio {product_currency} → BRL", min_value=0.000001, value=5.40, step=0.0001, format="%.4f", key="frm_product_fx")
 
             b1, b2, b3 = st.columns([1.1, 1, 1])
-            ncm = b1.text_input("NCM", value="")
-            country_of_origin = b2.text_input("País de origem", value="CN").upper()
-            incoterm = b3.selectbox("INCOTERM", ["EXW", "FCA", "FOB", "CFR", "CIF", "CPT", "CIP", "DAP", "DPU", "DDP"], index=2)
+            ncm = b1.text_input("NCM", value="", key="frm_ncm")
+            country_of_origin = b2.text_input("País de origem", value="CN", key="frm_country_of_origin").upper()
+            incoterm = b3.selectbox("INCOTERM", ["EXW", "FCA", "FOB", "CFR", "CIF", "CPT", "CIP", "DAP", "DPU", "DDP"], index=2, key="frm_incoterm")
 
             st.subheader("2) Logística internacional")
             c1, c2, c3, c4, c5 = st.columns(5)
-            freight_value = c1.number_input("Frete marítimo", min_value=0.0, value=0.0, step=0.01)
-            freight_currency = c2.text_input("Moeda do frete", value="USD").upper()
-            freight_fx = c3.number_input(f"Câmbio {freight_currency} → BRL", min_value=0.000001, value=5.40, step=0.0001, format="%.4f")
-            intl_insurance_pct = c4.number_input("Seguro internacional (%)", min_value=0.0, max_value=100.0, value=0.30, step=0.01)
-            port_origin = c5.text_input("Porto de origem", value="CNSHA")
+            freight_value = c1.number_input("Frete marítimo", min_value=0.0, value=0.0, step=0.01, key="frm_freight_value")
+            freight_currency = c2.text_input("Moeda do frete", value="USD", key="frm_freight_currency").upper()
+            freight_fx = c3.number_input(f"Câmbio {freight_currency} → BRL", min_value=0.000001, value=5.40, step=0.0001, format="%.4f", key="frm_freight_fx")
+            intl_insurance_pct = c4.number_input("Seguro internacional (%)", min_value=0.0, max_value=100.0, value=0.30, step=0.01, key="frm_intl_insurance_pct")
+            port_origin = c5.text_input("Porto de origem", value="CNSHA", key="frm_port_origin")
 
             d1, d2, d3 = st.columns(3)
-            port_destination = d1.text_input("Porto de destino (código)", value="PNG").upper()
+            port_destination = d1.text_input("Porto de destino (código)", value="PNG", key="frm_port_destination").upper()
             uf_list = sorted(st.session_state.icms_df["UF"].dropna().unique().tolist())
-            uf_destination = d2.selectbox("UF destino", options=uf_list, index=uf_list.index("PR") if "PR" in uf_list else 0)
-            apply_port_templates = d3.toggle("Aplicar premissas do porto", value=True)
+            uf_destination = d2.selectbox("UF destino", options=uf_list, index=uf_list.index("PR") if "PR" in uf_list else 0, key="frm_uf_destination")
+            apply_port_templates = d3.toggle("Aplicar premissas do porto", value=True, key="frm_apply_port_templates")
 
             port_defaults = get_port_defaults(port_destination, st.session_state.port_df)
 
@@ -179,32 +183,37 @@ with main_tab:
             e1, e2, e3, e4 = st.columns(4)
             port_costs = e1.number_input(
                 "Custos portuários (BRL)", min_value=0.0,
-                value=float(port_defaults["CUSTO_PORTUARIO_BASE_BRL"] if apply_port_templates else 0.0), step=0.01
+                value=float(port_defaults["CUSTO_PORTUARIO_BASE_BRL"] if apply_port_templates else 0.0), step=0.01,
+                key="frm_port_costs"
             )
             customs_clearance = e2.number_input(
                 "Custos de desembaraço (BRL)", min_value=0.0,
-                value=float(port_defaults["DESEMBARACO_BASE_BRL"] if apply_port_templates else 0.0), step=0.01
+                value=float(port_defaults["DESEMBARACO_BASE_BRL"] if apply_port_templates else 0.0), step=0.01,
+                key="frm_customs_clearance"
             )
             inland_freight = e3.number_input(
                 "Frete porto → planta (BRL)", min_value=0.0,
-                value=float(port_defaults["FRETE_PORTO_PLANTA_BASE_BRL"] if apply_port_templates else 0.0), step=0.01
+                value=float(port_defaults["FRETE_PORTO_PLANTA_BASE_BRL"] if apply_port_templates else 0.0), step=0.01,
+                key="frm_inland_freight"
             )
             inland_insurance_pct = e4.number_input(
                 "Seguro frete nacional ad valorem (%)", min_value=0.0, max_value=100.0,
-                value=float(port_defaults["SEGURO_NACIONAL_ADVAL_PCT"] if apply_port_templates else 0.15), step=0.01
+                value=float(port_defaults["SEGURO_NACIONAL_ADVAL_PCT"] if apply_port_templates else 0.15), step=0.01,
+                key="frm_inland_insurance_pct"
             )
 
             submitted = st.form_submit_button("Calcular landed cost", type="primary")
 
     with right:
+        port_defaults_preview = get_port_defaults(str(st.session_state.get("frm_port_destination", "PNG")), st.session_state.port_df)
         st.markdown("<div class='small-card'>", unsafe_allow_html=True)
         st.subheader("Premissas sugeridas pelo porto")
-        st.write(f"**Porto destino:** {port_destination}")
-        st.write(f"**Custos portuários base:** {brl(float(port_defaults['CUSTO_PORTUARIO_BASE_BRL']))}")
-        st.write(f"**Desembaraço base:** {brl(float(port_defaults['DESEMBARACO_BASE_BRL']))}")
-        st.write(f"**Frete porto → planta base:** {brl(float(port_defaults['FRETE_PORTO_PLANTA_BASE_BRL']))}")
-        st.write(f"**Seguro nacional base:** {pct(float(port_defaults['SEGURO_NACIONAL_ADVAL_PCT']))}")
-        st.caption(port_defaults.get("OBS", ""))
+        st.write(f"**Porto destino:** {str(st.session_state.get('frm_port_destination', 'PNG')).upper()}")
+        st.write(f"**Custos portuários base:** {brl(float(port_defaults_preview['CUSTO_PORTUARIO_BASE_BRL']))}")
+        st.write(f"**Desembaraço base:** {brl(float(port_defaults_preview['DESEMBARACO_BASE_BRL']))}")
+        st.write(f"**Frete porto → planta base:** {brl(float(port_defaults_preview['FRETE_PORTO_PLANTA_BASE_BRL']))}")
+        st.write(f"**Seguro nacional base:** {pct(float(port_defaults_preview['SEGURO_NACIONAL_ADVAL_PCT']))}")
+        st.caption(port_defaults_preview.get("OBS", ""))
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("<div class='small-card' style='margin-top:12px'>", unsafe_allow_html=True)
@@ -315,6 +324,7 @@ with main_tab:
             file_name=f"assistente_importacao_v2_{official.ncm}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             type="primary",
+            key="btn_download_excel"
         )
         d2.download_button(
             label="⬇️ Baixar resumo executivo (PDF)",
@@ -322,6 +332,7 @@ with main_tab:
             file_name=f"assistente_importacao_v2_{official.ncm}.pdf",
             mime="application/pdf",
             type="secondary",
+            key="btn_download_pdf"
         )
 
 with dashboard_tab:
@@ -367,6 +378,7 @@ with params_tab:
             data=st.session_state.icms_df.to_csv(index=False).encode("utf-8"),
             file_name="icms_uf_custom.csv",
             mime="text/csv",
+            key="btn_download_icms_csv"
         )
 
     with p2:
@@ -384,6 +396,7 @@ with params_tab:
             data=st.session_state.port_df.to_csv(index=False).encode("utf-8"),
             file_name="portos_custom.csv",
             mime="text/csv",
+            key="btn_download_ports_csv"
         )
 
     st.info("Em ambiente cloud simples, essas edições ficam em sessão. Para persistência real, a próxima evolução ideal é salvar em banco ou SharePoint/OneLake.")
