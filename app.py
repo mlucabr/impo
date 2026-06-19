@@ -160,15 +160,13 @@ with st.sidebar:
     use_uf_icms = st.toggle("Usar tabela ICMS por UF", value=True, key="sb_use_uf_icms")
     include_afrmm = st.toggle("Aplicar AFRMM (25% longo curso)", value=True, key="sb_include_afrmm")
     st.divider()
-    st.caption("As tabelas de ICMS por UF e custos-padrão por porto podem ser editadas na aba Parâmetros.")
-    st.divider()
-    st.subheader("O que mudou na v2")
+    st.subheader("v2.1")
     st.caption("""
+        - Tabelas de ICMS e custos-padrão podem ser editadas na aba Parâmetros.
         - País de origem incluído.
-        - Tabela de ICMS por UF editável no app.
         - Premissas de custos por porto editáveis no app.
         - Exportação em Excel e PDF.
-        - Dashboard executivo com composição e waterfall.
+        - Dashboard executivo com composição e waterfall.        
         """)
 
 st.markdown("<div class='hero'><h3 style='margin:0'>Simulação de Importação - Landed Cost</h3></div>", unsafe_allow_html=True)
