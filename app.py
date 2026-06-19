@@ -168,7 +168,7 @@ with st.sidebar:
         - Dashboard executivo com composição e waterfall.        
         """)
 
-st.markdown("<div class='hero'><h3 style='margin:0'>Simulação de Importação - Landed Cost</h3></div>", unsafe_allow_html=True)
+st.markdown("<div class='hero'><h3 style='margin:0'>Simulação de Importação</h3></div>", unsafe_allow_html=True)
 st.write("")
 main_tab, dashboard_tab, params_tab, docs_tab = st.tabs(["Operação", "Dashboard Executivo", "Parâmetros", "Documentação"])
 
@@ -229,12 +229,12 @@ with main_tab:
                 key="frm_inland_insurance_pct"
             )
 
-            submitted = st.form_submit_button("Calcular landed cost", type="primary")
+            submitted = st.form_submit_button("Calcular", type="primary")
 
     with right:
         port_defaults_preview = get_port_defaults(str(st.session_state.get("frm_port_destination", "PNG")), st.session_state.port_df)
         st.markdown("<div class='small-card'>", unsafe_allow_html=True)
-        st.subheader("Premissas sugeridas pelo porto")
+        st.subheader("Premissas sugeridas:")
         st.write(f"**Porto destino:** {str(st.session_state.get('frm_port_destination', 'PNG')).upper()}")
         st.write(f"**Custos portuários base:** {brl(float(port_defaults_preview['CUSTO_PORTUARIO_BASE_BRL']))}")
         st.write(f"**Desembaraço base:** {brl(float(port_defaults_preview['DESEMBARACO_BASE_BRL']))}")
