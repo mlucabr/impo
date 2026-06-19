@@ -210,10 +210,7 @@ with st.sidebar:
         padding: 0.2rem 0 0.6rem 0;
     ">
     """, unsafe_allow_html=True)
-
     st.image("oslogo.png", width=160)
-
-    """, unsafe_allow_html=True)
     st.divider()
     pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
     cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01, key="sb_cofins_rate")
