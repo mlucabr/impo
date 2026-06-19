@@ -35,7 +35,6 @@ CUSTOM_CSS = """
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
-st.write("")
 
 def brl(v: float) -> str:
     return f"R$ {v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
@@ -164,7 +163,7 @@ with st.sidebar:
     st.caption("As tabelas de ICMS por UF e custos-padrão por porto podem ser editadas na aba Parâmetros.")
 
 st.markdown("<div class='hero'><h3 style='margin:0'>Simulação de Importação - Landed Cost</h3></div>", unsafe_allow_html=True)
-
+st.write("")
 main_tab, dashboard_tab, params_tab, docs_tab = st.tabs(["Operação", "Dashboard Executivo", "Parâmetros", "Documentação"])
 
 with main_tab:
