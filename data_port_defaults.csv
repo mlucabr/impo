@@ -1,9 +1,9 @@
 PORTO_CODIGO,CUSTO_PORTUARIO_BASE_BRL,DESEMBARACO_BASE_BRL,FRETE_PORTO_PLANTA_BASE_BRL,SEGURO_NACIONAL_ADVAL_PCT,OBS
-PNG,3500,2200,1800,0.15,Premissa inicial para Paranaguá — revise conforme operação
-SSZ,4200,2500,2400,0.15,Premissa inicial para Santos — revise conforme operação
-ITJ,3900,2300,2100,0.15,Premissa inicial para Itajaí — revise conforme operação
-NVT,4100,2350,2200,0.15,Premissa inicial para Navegantes — revise conforme operação
-RIG,4600,2700,2600,0.15,Premissa inicial para Rio Grande — revise conforme operação
-SSA,4300,2600,2800,0.15,Premissa inicial para Salvador — revise conforme operação
-FOR,4400,2600,3200,0.15,Premissa inicial para Fortaleza — revise conforme operação
-VIX,4050,2450,2500,0.15,Premissa inicial para Vitória — revise conforme operação
+PNG,3500,2200,2500,0.10,Premissa inicial para Paranaguá — revise conforme operação
+SSZ,4200,2500,2400,0.10,Premissa inicial para Santos — revise conforme operação
+ITJ,3900,2300,2100,0.10,Premissa inicial para Itajaí — revise conforme operação
+NVT,4100,2350,2200,0.10,Premissa inicial para Navegantes — revise conforme operação
+RIG,4600,2700,2600,0.10,Premissa inicial para Rio Grande — revise conforme operação
+SSA,4300,2600,2800,0.10,Premissa inicial para Salvador — revise conforme operação
+FOR,4400,2600,3200,0.10,Premissa inicial para Fortaleza — revise conforme operação
+VIX,4050,2450,2500,0.10,Premissa inicial para Vitória — revise conforme operação
