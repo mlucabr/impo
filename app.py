@@ -27,24 +27,52 @@ st.set_page_config(page_title="OneSupply Impo", page_icon="🚢", layout="wide")
 
 st.markdown("""
 <style>
-/* sobe o conteúdo geral da sidebar */
+/* ===== Sidebar ===== */
 section[data-testid="stSidebar"] .block-container {
     padding-top: 0rem !important;
-    padding-bottom: 1rem;
+    padding-bottom: 1rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
 }
 
-/* remove espaço acima do primeiro elemento */
+/* Wrapper real da imagem dentro da sidebar */
 section[data-testid="stSidebar"] [data-testid="stImage"] {
-    margin-top: -40px !important;
-    margin-bottom: 8px !important;
+    margin-top: -18px !important;
+    margin-bottom: 10px !important;
     display: flex;
     justify-content: center;
 }
 
-/* centraliza a imagem */
+/* Centraliza a imagem */
 section[data-testid="stSidebar"] [data-testid="stImage"] img {
-    margin: 0 auto;
     display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Linha divisória mais discreta */
+section[data-testid="stSidebar"] hr {
+    margin-top: 0.8rem !important;
+    margin-bottom: 0.8rem !important;
+    border-color: #d9dde5 !important;
+}
+
+/* Título/rodapé da sidebar */
+.sidebar-version {
+    text-align: center;
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-top: -2px;
+    margin-bottom: 0.2rem;
+}
+
+.sidebar-title {
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 0.1rem;
+    margin-bottom: 0.2rem;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -176,9 +204,21 @@ def render_breakdown_chart(df: pd.DataFrame) -> alt.Chart:
 init_state()
 
 with st.sidebar:
-    st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
-    st.image("oslogo.png", width=170)
-    st.markdown('</div>', unsafe_allow_html=True)
+  st.markdown("""
+    <div style="
+        text-align:center;
+        padding: 0.2rem 0 0.6rem 0;
+    ">
+    """, unsafe_allow_html=True)
+
+    st.image("oslogo.png", width=160)
+
+    st.markdown("""
+        <div class='sidebar-title'>OneSupply</div>
+        <div class='sidebar-version'>Assistente de Importação • v2.1</div>
+    </div>
+    """, unsafe_allow_html=True)
+    st.divider(
     pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
     cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01, key="sb_cofins_rate")
     use_uf_icms = st.toggle("Usar tabela ICMS por UF", value=True, key="sb_use_uf_icms")
