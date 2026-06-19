@@ -204,7 +204,7 @@ def render_breakdown_chart(df: pd.DataFrame) -> alt.Chart:
 init_state()
 
 with st.sidebar:
-  st.markdown("""
+    st.markdown("""
     <div style="
         text-align:center;
         padding: 0.2rem 0 0.6rem 0;
