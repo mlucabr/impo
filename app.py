@@ -218,7 +218,7 @@ with st.sidebar:
         <div class='sidebar-version'>Assistente de Importação • v2.1</div>
     </div>
     """, unsafe_allow_html=True)
-    st.divider(
+    st.divider()
     pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
     cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01, key="sb_cofins_rate")
     use_uf_icms = st.toggle("Usar tabela ICMS por UF", value=True, key="sb_use_uf_icms")
