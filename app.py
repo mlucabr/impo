@@ -23,6 +23,7 @@ from tax_engine import (
     tax_dataframe,
 )
 
+st.write("")
 st.set_page_config(page_title="Assistente de Importação Pro", page_icon="🚢", layout="wide")
 
 CUSTOM_CSS = """
