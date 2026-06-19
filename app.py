@@ -42,7 +42,7 @@ st.markdown("""
 
 CUSTOM_CSS = """
 <style>
-.block-container {padding-top: 3.0rem; padding-bottom: 0.5rem;}
+.block-container {padding-top: 2.5rem; padding-bottom: 0.5rem;}
 [data-testid="stMetricValue"] {font-size: 1.6rem;}
 .kicker {font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em;}
 .hero {padding: 0rem 1.1rem; border: 1px solid #e2e8f0; border-radius: 18px; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);} 
