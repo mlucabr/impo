@@ -35,7 +35,7 @@ section[data-testid="stSidebar"] .block-container {
 
 /* remove espaço acima do primeiro elemento */
 section[data-testid="stSidebar"] [data-testid="stImage"] {
-    margin-top: -18px !important;
+    margin-top: -30px !important;
     margin-bottom: 8px !important;
     display: flex;
     justify-content: center;
