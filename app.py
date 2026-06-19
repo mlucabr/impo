@@ -154,12 +154,22 @@ init_state()
 with st.sidebar:
     st.markdown("### Assistente de Importação")
     st.caption("Versão 2.0")
+    st.divider()
     pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
     cofins_rate = st.number_input("COFINS-Importação (%)", min_value=0.0, max_value=100.0, value=9.65, step=0.01, key="sb_cofins_rate")
     use_uf_icms = st.toggle("Usar tabela ICMS por UF", value=True, key="sb_use_uf_icms")
     include_afrmm = st.toggle("Aplicar AFRMM (25% longo curso)", value=True, key="sb_include_afrmm")
     st.divider()
     st.caption("As tabelas de ICMS por UF e custos-padrão por porto podem ser editadas na aba Parâmetros.")
+    st.divider()
+    st.subheader("O que mudou na v2")
+        st.markdown("""
+        - País de origem incluído.
+        - Tabela de ICMS por UF editável no app.
+        - Premissas de custos por porto editáveis no app.
+        - Exportação em Excel e PDF.
+        - Dashboard executivo com composição e waterfall.
+        """)
 
 st.markdown("<div class='hero'><h3 style='margin:0'>Simulação de Importação - Landed Cost</h3></div>", unsafe_allow_html=True)
 st.write("")
@@ -237,14 +247,6 @@ with main_tab:
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("<div class='small-card' style='margin-top:12px'>", unsafe_allow_html=True)
-        st.subheader("O que mudou na v2")
-        st.markdown("""
-        - País de origem incluído.
-        - Tabela de ICMS por UF editável no app.
-        - Premissas de custos por porto editáveis no app.
-        - Exportação em Excel e PDF.
-        - Dashboard executivo com composição e waterfall.
-        """)
         st.markdown("</div>", unsafe_allow_html=True)
 
     if submitted:
