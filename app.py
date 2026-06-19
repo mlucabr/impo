@@ -168,7 +168,7 @@ init_state()
 
 with st.sidebar:
     st.markdown('<div class="sidebar-logo">', unsafe_allow_html=True)
-    st.image("assets/oslogo.png", width=170)
+    st.image("oslogo.png", width=170)
     st.markdown('</div>', unsafe_allow_html=True)
     st.divider()
     pis_rate = st.number_input("PIS-Importação (%)", min_value=0.0, max_value=100.0, value=2.10, step=0.01, key="sb_pis_rate")
